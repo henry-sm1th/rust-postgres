@@ -160,7 +160,7 @@ impl PrimaryKeepAliveBody {
 
 #[non_exhaustive]
 /// A message of the logical replication stream
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum LogicalReplicationMessage {
     /// A BEGIN statement
     Begin(BeginBody),
@@ -349,7 +349,7 @@ impl LogicalReplicationMessage {
 }
 
 /// A row as it appears in the replication stream
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Tuple(Vec<TupleData>);
 
 impl Tuple {
@@ -420,7 +420,7 @@ impl Column {
 }
 
 /// The data of an individual column as it appears in the replication stream
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum TupleData {
     /// Represents a NULL value
     Null,
@@ -456,7 +456,7 @@ impl TupleData {
 }
 
 /// A BEGIN statement
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct BeginBody {
     final_lsn: u64,
     timestamp: i64,
@@ -484,7 +484,7 @@ impl BeginBody {
 }
 
 /// A COMMIT statement
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct CommitBody {
     flags: i8,
     commit_lsn: u64,
@@ -521,7 +521,7 @@ impl CommitBody {
 /// An Origin replication message
 ///
 /// Note that there can be multiple Origin messages inside a single transaction.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct OriginBody {
     commit_lsn: u64,
     name: Bytes,
@@ -557,7 +557,7 @@ pub enum ReplicaIdentity {
 }
 
 /// A Relation replication message
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct RelationBody {
     rel_id: u32,
     namespace: Bytes,
@@ -599,7 +599,7 @@ impl RelationBody {
 }
 
 /// A Type replication message
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct TypeBody {
     id: u32,
     namespace: Bytes,
@@ -627,7 +627,7 @@ impl TypeBody {
 }
 
 /// An INSERT statement
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct InsertBody {
     rel_id: u32,
     tuple: Tuple,
@@ -648,7 +648,7 @@ impl InsertBody {
 }
 
 /// An UPDATE statement
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct UpdateBody {
     rel_id: u32,
     old_tuple: Option<Tuple>,
@@ -685,7 +685,7 @@ impl UpdateBody {
 }
 
 /// A DELETE statement
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct DeleteBody {
     rel_id: u32,
     old_tuple: Option<Tuple>,
@@ -715,7 +715,7 @@ impl DeleteBody {
 }
 
 /// A TRUNCATE statement
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct TruncateBody {
     options: i8,
     rel_ids: Vec<u32>,
