@@ -35,7 +35,7 @@ const REPLICA_IDENTITY_INDEX_TAG: u8 = b'i';
 
 /// An enum representing Postgres backend replication messages.
 #[non_exhaustive]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum ReplicationMessage<D> {
     XLogData(XLogDataBody<D>),
     PrimaryKeepAlive(PrimaryKeepAliveBody),
@@ -86,7 +86,7 @@ impl ReplicationMessage<Bytes> {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct XLogDataBody<D> {
     wal_start: u64,
     wal_end: u64,
@@ -134,7 +134,7 @@ impl<D> XLogDataBody<D> {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct PrimaryKeepAliveBody {
     wal_end: u64,
     timestamp: i64,
