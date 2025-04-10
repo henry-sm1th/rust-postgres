@@ -373,7 +373,7 @@ impl Tuple {
 }
 
 /// A column as it appears in the replication stream
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Column {
     flags: i8,
     name: Bytes,
@@ -542,7 +542,7 @@ impl OriginBody {
 }
 
 /// Describes the REPLICA IDENTITY setting of a table
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum ReplicaIdentity {
     /// default selection for replica identity (primary key or nothing)
     Default,
